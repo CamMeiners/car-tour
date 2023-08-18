@@ -1,24 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import { Canvas } from '@react-three/fiber';
+import { useGLTF, Stage, PresentationControls } from '@react-three/drei';
+import * as THREE from 'three';
+function Model(props) {
+  const { scene } = useGLTF('/mustang6.glb');
+  return <primitive object={scene} {...props} />;
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Canvas
+      dpr={[1, 2]}
+      shadows
+      camera={{ fov: 45 }}
+      style={{ position: 'absolute' }}
+      touchaction="none"
+    >
+      <color attach="background" args={['#101010']} touchaction="none" />
+      <PresentationControls
+        speed={1}
+        global
+        polar={[-0.1, Math.PI / 4]}
+        touchaction="none"
+      >
+        <Stage environment={'warehouse'} touchaction="none" intensity={0}>
+          <Model scale={0.01} touchaction="none" />
+        </Stage>
+      </PresentationControls>
+    </Canvas>
   );
 }
 
